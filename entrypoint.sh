@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
-LOTUS_CONFIG=/opt/lotus.toml
+LOTUS_CONFIG=/root/.lotus/config.toml
 SERVICE_CONFIG=/opt/filecoin-service.toml
 
 if test $# -eq 0; then
   # generate lotus config.toml
-  echo -e "[API]\nListenAddress=\"/ip4/0.0.0.0/tcp/1234/http\"" > $LOTUS_CONFIG
-  echo -e "[Libp2p]\n[Pubsub]\n[Client]\n[Metrics]" >> $LOTUS_CONFIG
-  /opt/coin/lotus daemon --config $LOTUS_CONFIG &
+  if [ ! -f $LOTUS_CONFIG ]; then
+    echo -e "[API]\nListenAddress=\"/ip4/0.0.0.0/tcp/1234/http\"" > $LOTUS_CONFIG
+    echo -e "[Libp2p]\n[Pubsub]\n[Client]\n[Metrics]" >> $LOTUS_CONFIG
+  fi
+  /opt/coin/lotus daemon &
   # /opt/coin/lotus wait-api
   echo 'Waiting for lotus JSON RPC...'
   while ! nc -z -w 1 127.0.0.1 1234; do
