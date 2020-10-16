@@ -6,7 +6,7 @@ RUN cd filecoin-signing-tools && cargo build --release --manifest-path service/C
 FROM ubuntu:18.04
 WORKDIR /opt/coin
 RUN apt update && apt install -y wget mesa-opencl-icd libssl-dev netcat
-RUN wget https://github.com/filecash/lotus/releases/download/filecash-v0.7.0/intel-filecash-0.7.0-fix.tar.gz -O - | tar -C /opt/coin --strip-components 1 -xzf -
+RUN wget https://github.com/filecash/lotus/releases/download/filecash-v0.7.0/intel-filecash-0.7.0-fix.tar.gz -O - | tar -C /opt/coin --strip-components 1 -xf -
 COPY --from=builder /opt/filecoin-signing-tools/target/release/filecoin-service /opt/coin/
 COPY ./entrypoint.sh /opt/
 RUN chmod +x /opt/entrypoint.sh
