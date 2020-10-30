@@ -8,7 +8,8 @@ RUN apt update && apt install -y jq ocl-icd-opencl-dev
 RUN wget -c https://dl.google.com/go/go1.14.7.linux-amd64.tar.gz -O - | tar -xz -C /usr/local
 RUN git clone https://github.com/filecash/lotus_builder
 WORKDIR /opt/lotus_builder
-RUN PATH="$PATH:/usr/local/go/bin" CGO_CFLAGS_ALLOW="-D__BLST_PORTABLE__" CGO_CFLAGS="-D__BLST_PORTABLE__" bash build.sh -a
+ENV PATH="$PATH:/usr/local/go/bin" CGO_CFLAGS_ALLOW="-D__BLST_PORTABLE__" CGO_CFLAGS="-D__BLST_PORTABLE__" RUSTFLAGS="-C target-cpu=native -g" FFI_BUILD_FROM_SOURCE=1
+RUN bash build.sh -a
 
 FROM ubuntu:18.04
 WORKDIR /opt/coin
