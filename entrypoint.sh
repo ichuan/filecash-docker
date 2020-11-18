@@ -15,7 +15,7 @@ mkdir -p /root/.lotus
 
 generate_service_config () {
   JWT=`cat /root/.lotus/token`
-  LOTUS_TOKEN=${LOTUS_TOKEN:-JWT}
+  LOTUS_TOKEN=${LOTUS_TOKEN:-$JWT}
   echo -e "[service]\naddress=\"0.0.0.0:3030\"" > $SERVICE_CONFIG
   echo -e "\n[remote_node]\nurl=\"http://${LOTUS_ADDR}/rpc/v0\"\njwt=\"${LOTUS_TOKEN}\"" >> $SERVICE_CONFIG
 }
