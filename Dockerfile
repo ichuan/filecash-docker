@@ -1,15 +1,10 @@
-FROM rust:latest AS builder
-WORKDIR /opt
-# build filecoin-service
-RUN git clone https://github.com/Zondax/filecoin-signing-tools
-RUN cd filecoin-signing-tools && cargo build --release --manifest-path service/Cargo.toml
-
+FROM mixhq/filecoin-signing-tools AS builder
 FROM ubuntu:18.04
 WORKDIR /opt/coin
 RUN apt update && apt install -y wget ocl-icd-opencl-dev libssl-dev netcat
-RUN wget https://github.com/filecash/lotus/releases/download/filecash-v0.7.0-mainnet-fix/intel-filecash-mainnet-fix.tar.gz -O - | tar -C /tmp -xzf -
+RUN wget https://github.com/filecash/lotus/releases/download/filecash-v0.9.0/intel-filecash-v0.9.0.tar.gz -O - | tar -C /tmp -xzf -
 RUN mv /tmp/lotus /opt/coin/lotus-intel
-RUN wget https://github.com/filecash/lotus/releases/download/filecash-v0.7.0-mainnet-fix/amd-filecash-mainnet-fix.tar.gz -O - | tar -C /tmp -xzf -
+RUN wget https://github.com/filecash/lotus/releases/download/filecash-v0.9.0/amd-filecash-v0.9.0.tar.gz -O - | tar -C /tmp -xzf -
 RUN mv /tmp/lotus /opt/coin/lotus-amd
 COPY --from=builder /opt/filecoin-signing-tools/target/release/filecoin-service /opt/coin/
 COPY ./entrypoint.sh /opt/
