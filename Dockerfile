@@ -1,7 +1,7 @@
 FROM mixhq/filecoin-signing-tools AS builder
 FROM ubuntu:18.04
 WORKDIR /opt/coin
-RUN apt update && apt install -y wget ocl-icd-opencl-dev libssl-dev netcat
+RUN apt update && apt install -y wget ocl-icd-opencl-dev libssl-dev netcat hwloc libhwloc-dev
 RUN wget https://snapshot.file.cash/intel-filecash-v1.2.2.tar.gz -O - | tar -C /tmp -xzf -
 RUN mv /tmp/lotus /opt/coin/lotus-intel
 RUN wget https://snapshot.file.cash/amd-filecash-v1.2.2.tar.gz -O - | tar -C /tmp -xzf -
