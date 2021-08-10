@@ -1,4 +1,4 @@
-FROM mixhq/filecoin-signing-tools AS builder
+FROM wshub/filecoin-signing-tools AS builder
 FROM ubuntu:18.04
 WORKDIR /opt/coin
 RUN apt update && apt install -y wget ocl-icd-opencl-dev libssl-dev netcat hwloc libhwloc-dev
