@@ -36,6 +36,7 @@ if test $# -eq 0; then
       echo -e "[API]\nListenAddress=\"/ip4/0.0.0.0/tcp/1234/http\"" > $LOTUS_CONFIG
       echo -e "[Libp2p]\n[Pubsub]\n[Client]\n[Metrics]" >> $LOTUS_CONFIG
     fi
+    [ -f $LOTUS_CONFIG ] && sed -i 's^#\s*ListenAddress\s*=\s*"/ip4/127.0.0.1/tcp/1234/http"^ListenAddress="/ip4/0.0.0.0/tcp/1234/http"^g' $LOTUS_CONFIG
     exec /opt/coin/lotus daemon
   else
     generate_service_config

@@ -2,9 +2,9 @@ FROM wshub/filecoin-signing-tools AS builder
 FROM ubuntu:18.04
 WORKDIR /opt/coin
 RUN apt update && apt install -y wget ocl-icd-opencl-dev libssl-dev netcat hwloc libhwloc-dev
-RUN wget https://snapshot.file.cash/intel-filecash-v1.2.2.tar.gz -O - | tar -C /tmp -xzf -
+RUN wget https://github.com/filecash/lotus/releases/download/filecash-v1.5.0/filecash-v1.5.0-intel-18.04.tar.gz -O - | tar -C /tmp -xzf -
 RUN mv /tmp/lotus /opt/coin/lotus-intel
-RUN wget https://snapshot.file.cash/amd-filecash-v1.2.2.tar.gz -O - | tar -C /tmp -xzf -
+RUN wget https://github.com/filecash/lotus/releases/download/filecash-v1.5.0/filecash-v1.5.0-amd-18.04.tar.gz -O - | tar -C /tmp -xzf -
 RUN mv /tmp/lotus /opt/coin/lotus-amd
 COPY --from=builder /opt/filecoin-signing-tools/target/release/filecoin-service /opt/coin/
 COPY ./entrypoint.sh /opt/
